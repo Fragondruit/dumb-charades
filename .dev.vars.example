@@ -1,0 +1,4 @@
+# Copy to .dev.vars for local dev (Wrangler + Vite). Do not commit .dev.vars.
+# https://developers.cloudflare.com/workers/configuration/secrets/
+
+TMDB_API_KEY="your_tmdb_api_key_here"

@@ -5,10 +5,7 @@ const HINDI_PLACEHOLDER = "(Hindi title — translation coming later)";
 const URDU_PLACEHOLDER = "(Urdu title — translation coming later)";
 
 export default function App() {
-  const client = useMemo(
-    () => new MovieClient(import.meta.env.VITE_TMDB_API_KEY ?? ""),
-    [],
-  );
+  const client = useMemo(() => new MovieClient(), []);
 
   const [movie, setMovie] = useState<BollywoodMoviePick | null>(null);
   const [loading, setLoading] = useState(false);
