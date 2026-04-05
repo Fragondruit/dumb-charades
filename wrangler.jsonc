@@ -1,8 +1,8 @@
 {
-    "routes": [
-      {
-        "pattern": "dumb-charades.com",
-        "custom_domain": true
-      }
-    ]
+  "routes": [
+    {
+      "pattern": "dumb-charades.com",
+      "custom_domain": true,
+    },
+  ],
 }
