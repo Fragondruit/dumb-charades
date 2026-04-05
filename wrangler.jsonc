@@ -11,11 +11,5 @@
   },
   "secrets": {
     "required": ["TMDB_API_KEY"],
-  },
-  "routes": [
-    {
-      "pattern": "dumb-charades.com",
-      "custom_domain": true,
-    },
-  ],
+  }
 }
