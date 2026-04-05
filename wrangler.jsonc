@@ -1,4 +1,17 @@
 {
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "dumb-charades",
+  "main": "worker.ts",
+  "compatibility_date": "2026-04-04",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*"],
+  },
+  "secrets": {
+    "required": ["TMDB_API_KEY"],
+  },
   "routes": [
     {
       "pattern": "dumb-charades.com",
