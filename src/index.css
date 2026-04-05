@@ -27,34 +27,24 @@ body {
 
 .app {
   min-height: 100%;
-  padding: clamp(1rem, 4vw, 2.5rem);
+  min-height: 100dvh;
 }
 
 .layout {
   display: grid;
-  grid-template-columns: minmax(0, 14rem) minmax(0, 1fr);
-  gap: clamp(1.25rem, 4vw, 2.5rem);
-  max-width: 56rem;
-  margin: 0 auto;
-  align-items: start;
-}
-
-@media (max-width: 640px) {
-  .layout {
-    grid-template-columns: 1fr;
-  }
-
-  .sidebar {
-    order: 2;
-  }
-
-  .main {
-    order: 1;
-  }
+  grid-template-columns: minmax(11rem, 16rem) 1fr;
+  gap: clamp(1rem, 3vw, 2rem);
+  min-height: 100dvh;
+  width: 100%;
+  align-items: stretch;
 }
 
 .sidebar {
-  padding-top: 0.25rem;
+  padding: clamp(1.25rem, 4vw, 2.5rem);
+  padding-right: 0.75rem;
+  justify-self: stretch;
+  align-self: start;
+  text-align: left;
 }
 
 .meta-card {
@@ -102,7 +92,33 @@ body {
 }
 
 .main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
+  min-height: 100dvh;
+  padding: clamp(1.25rem, 4vw, 2.5rem);
+  padding-left: 0.75rem;
+  box-sizing: border-box;
+}
+
+@media (max-width: 640px) {
+  .layout {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .sidebar {
+    order: 2;
+  }
+
+  .main {
+    order: 1;
+    min-height: auto;
+    padding-top: clamp(2rem, 8vw, 3rem);
+    padding-bottom: 2rem;
+  }
 }
 
 .eyebrow {
