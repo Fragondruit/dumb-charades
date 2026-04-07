@@ -65,7 +65,7 @@ export default function App() {
               <p className="translation-placeholder">
                 {movie?.hindiVerbatim?.trim()
                   ? movie.hindiVerbatim
-                  : "— (generate a movie; add GEMINI_API_KEY for script transliteration)"}
+                  : "Translation will appear on generation."}
               </p>
             </div>
             <div className="translation-block">
@@ -73,7 +73,7 @@ export default function App() {
               <p className="translation-placeholder">
                 {movie?.urduVerbatim?.trim()
                   ? movie.urduVerbatim
-                  : "— (generate a movie; add GEMINI_API_KEY for script transliteration)"}
+                  : "Translation will appear on generation."}
               </p>
             </div>
           </div>

@@ -14,23 +14,13 @@ export class GeminiClient {
   private static async generate(
     apiKey: string,
     englishTitle: string,
-    target: "hindi" | "urdu",
+    lang: "hindi" | "urdu",
   ): Promise<string> {
     if (!apiKey.trim() || !englishTitle.trim()) {
       return "";
     }
 
-    const titleLiteral = JSON.stringify(englishTitle);
-    const scriptDesc =
-      target === "hindi"
-        ? "Devanagari (Hindi script)"
-        : "Urdu using Arabic script (standard Urdu romanization conventions for film titles)";
-
-    const prompt = `The following value is an English movie title (JSON-encoded string). Transliterate it verbatim into ${scriptDesc}: same pronunciation as commonly used for Indian cinema, not a translation of meaning.
-
-Output ONLY the transliterated title. No quotes, labels, newlines, or explanation.
-
-Movie title: ${titleLiteral}`;
+    const prompt = `Convert the sentence '${englishTitle}' verbatim into ${lang} script. Output no extraneous text please.`;
 
     try {
       const ai = new GoogleGenerativeAI(apiKey);
