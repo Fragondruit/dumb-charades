@@ -11,5 +11,5 @@
   },
   "secrets": {
     "required": ["TMDB_API_KEY"],
-  }
+  },
 }
