@@ -25,6 +25,10 @@ export type BollywoodMoviePick = {
   releaseYear: string | null;
   castNames: string[];
   tmdbUrl: string;
+  /** Filled by API route via Gemini when GEMINI_API_KEY is set; else "". */
+  hindiVerbatim: string;
+  /** Filled by API route via Gemini when GEMINI_API_KEY is set; else "". */
+  urduVerbatim: string;
 };
 
 function randomInt(min: number, max: number): number {
@@ -113,5 +117,7 @@ export async function fetchRandomBollywoodMovie(
     releaseYear,
     castNames,
     tmdbUrl: `https://www.themoviedb.org/movie/${movie.id}`,
+    hindiVerbatim: "",
+    urduVerbatim: "",
   };
 }

@@ -3,6 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import react from "@vitejs/plugin-react";
 import { defineConfig, type ViteDevServer } from "vite";
+import { GeminiClient } from "./src/GeminiClient";
 import { fetchRandomBollywoodMovie } from "./src/tmdbBollywood";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -32,13 +33,17 @@ function parseDevVarsFile(content: string): Record<string, string> {
   return out;
 }
 
-function readTmdbKeyFromDevVars(): string {
+function readDevVars(): { tmdb: string; gemini: string } {
   const filePath = path.join(__dirname, ".dev.vars");
   try {
     const raw = fs.readFileSync(filePath, "utf8");
-    return parseDevVarsFile(raw).TMDB_API_KEY ?? "";
+    const o = parseDevVarsFile(raw);
+    return {
+      tmdb: o.TMDB_API_KEY ?? "",
+      gemini: o.GEMINI_API_KEY ?? "",
+    };
   } catch {
-    return "";
+    return { tmdb: "", gemini: "" };
   }
 }
 
@@ -55,22 +60,33 @@ function tmdbDevApiPlugin() {
 
         void (async () => {
           try {
-            const key = readTmdbKeyFromDevVars();
-            if (!key.trim()) {
+            const { tmdb: tmdbKey, gemini: geminiKey } = readDevVars();
+            if (!tmdbKey.trim()) {
               res.statusCode = 503;
               res.setHeader("Content-Type", "application/json; charset=utf-8");
               res.end(
                 JSON.stringify({
-                  error:
-                    "Missing TMDB_API_KEY. Add it to .dev.vars (see .dev.vars.example).",
+                  error: "Missing TMDB_API_KEY. Add it to .dev.vars for local dev.",
                 }),
               );
               return;
             }
-            const movie = await fetchRandomBollywoodMovie(key);
+            const base = await fetchRandomBollywoodMovie(tmdbKey);
+
+            if (geminiKey.trim()) {
+              const [hindiVerbatim, urduVerbatim] = await Promise.all([
+                GeminiClient.convertToHindi(geminiKey, base.title),
+                GeminiClient.convertToUrdu(geminiKey, base.title),
+              ]);
+              res.statusCode = 200;
+              res.setHeader("Content-Type", "application/json; charset=utf-8");
+              res.end(JSON.stringify({ ...base, hindiVerbatim, urduVerbatim }));
+              return;
+            }
+
             res.statusCode = 200;
             res.setHeader("Content-Type", "application/json; charset=utf-8");
-            res.end(JSON.stringify(movie));
+            res.end(JSON.stringify(base));
           } catch (e) {
             res.statusCode = 500;
             res.setHeader("Content-Type", "application/json; charset=utf-8");

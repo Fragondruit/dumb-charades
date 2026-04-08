@@ -1,9 +1,6 @@
 import { useCallback, useMemo, useState } from "react";
 import { BollywoodMoviePick, MovieClient } from "./MovieClient";
 
-const HINDI_PLACEHOLDER = "(Hindi title — translation coming later)";
-const URDU_PLACEHOLDER = "(Urdu title — translation coming later)";
-
 export default function App() {
   const client = useMemo(() => new MovieClient(), []);
 
@@ -65,11 +62,19 @@ export default function App() {
           <div className="translations">
             <div className="translation-block">
               <h2 className="subheading">Hindi</h2>
-              <p className="translation-placeholder">{HINDI_PLACEHOLDER}</p>
+              <p className="translation-placeholder">
+                {movie?.hindiVerbatim?.trim()
+                  ? movie.hindiVerbatim
+                  : "Translation will appear on generation."}
+              </p>
             </div>
             <div className="translation-block">
               <h2 className="subheading">Urdu</h2>
-              <p className="translation-placeholder">{URDU_PLACEHOLDER}</p>
+              <p className="translation-placeholder">
+                {movie?.urduVerbatim?.trim()
+                  ? movie.urduVerbatim
+                  : "Translation will appear on generation."}
+              </p>
             </div>
           </div>
 
